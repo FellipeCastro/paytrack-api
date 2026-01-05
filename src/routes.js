@@ -1,5 +1,6 @@
 import { Router } from "express";
 import sequelize from "./config/database.js";
+import AuthController from "./controllers/AuthController.js";
 
 const routes = Router();
 
@@ -21,5 +22,9 @@ routes.get("/health", (req, res) => {
             });
         });
 });
+
+// auth
+routes.post("/auth/register", AuthController.Register);
+routes.post("/auth/login", AuthController.Login);
 
 export default routes;
