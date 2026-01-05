@@ -9,6 +9,14 @@ const Category = sequelize.define(
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
+        user_id: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: "users",
+                key: "id",
+            }
+        },
         name: {
             type: DataTypes.STRING(50),
             allowNull: false,

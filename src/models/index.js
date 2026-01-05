@@ -32,6 +32,7 @@ Alert.belongsTo(User, {
 // category
 Category.hasMany(Subscription, {
     foreignKey: "category_id",
+    onDelete: "CASCADE",
 });
 Subscription.belongsTo(Category, {
     foreignKey: "category_id",

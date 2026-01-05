@@ -9,6 +9,14 @@ const Charge = sequelize.define(
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
+        subscription_id: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: "subscriptions",
+                key: "id",
+            },
+        },
         charge_date: {
             type: DataTypes.DATEONLY,
             allowNull: false,

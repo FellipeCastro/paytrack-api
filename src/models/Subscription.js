@@ -9,6 +9,22 @@ const Subscription = sequelize.define(
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
+        user_id: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: "users",
+                key: "id",
+            },
+        },
+        category_id: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: "categories",
+                key: "id",
+            },
+        },
         service_name: {
             type: DataTypes.STRING(100),
             allowNull: false,
