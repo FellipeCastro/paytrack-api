@@ -30,6 +30,8 @@ class AuthController {
         const formattedEmail = email.toLowerCase().trim();
 
         const result = await AuthService.Login(formattedEmail, password);
+
+        return res.status(200).json(result);
     }
 }
 

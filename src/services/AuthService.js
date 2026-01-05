@@ -11,20 +11,11 @@ class AuthService {
         }
 
         const password_hash = await bcrypt.hash(password, 10);
-        
-        const result = await AuthRepository.Register(
-            name,
-            email,
-            password_hash
-        );
+
+        await AuthRepository.Register(name, email, password_hash);
 
         const token = CreateToken(result.id);
-        
-        return {
-            name: result.name,
-            email: result.email,
-            token,
-        };
+        return { token };
     }
 
     async Login(email, password) {
@@ -34,13 +25,8 @@ class AuthService {
         }
 
         const token = CreateToken(user.id);
-        return {
-            name: user.name,
-            email: user.email,
-            token,
-        };
+        return { token };
     }
 }
-
 
 export default new AuthService();
