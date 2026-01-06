@@ -3,6 +3,7 @@ import sequelize from "./config/database.js";
 import { ValidateToken } from "./middlewaers/auth.js";
 import AuthController from "./controllers/AuthController.js";
 import UserController from "./controllers/UserController.js";
+import CategoryController from "./controllers/CategoryController.js";
 
 const routes = Router();
 
@@ -33,5 +34,11 @@ routes.post("/auth/login", AuthController.Login);
 routes.get("/users/profile", ValidateToken, UserController.Get);
 routes.put("/users/profile", ValidateToken, UserController.Edit);
 routes.delete("/users/profile", ValidateToken, UserController.Delete);
+
+// categories
+routes.get("/categories", ValidateToken, CategoryController.List);
+routes.post("/categories", ValidateToken, CategoryController.Create);
+routes.put("/categories/:id", ValidateToken, CategoryController.Edit);
+routes.delete("/categories/:id", ValidateToken, CategoryController.Delete);
 
 export default routes;

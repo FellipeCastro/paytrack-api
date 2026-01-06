@@ -3,8 +3,8 @@ import UserService from "../services/UserService.js";
 class UserController {
     async Get(req, res) {
         const user_id = req.user_id;
-        const result = await UserService.Get(user_id);
-        return res.status(200).json(result);
+        const user = await UserService.Get(user_id);
+        return res.status(200).json(user);
     }
 
     async Edit(req, res) {

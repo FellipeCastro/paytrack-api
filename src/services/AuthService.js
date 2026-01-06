@@ -5,6 +5,12 @@ import { CreateToken } from "../middlewaers/auth.js";
 
 class AuthService {
     async Register(name, email, password) {
+        if (!name || !email || !password) {
+            throw new BadRequestError("Todos os campos são obrigatórios.");
+        }
+
+        const formattedEmail = email.toLowerCase().trim();
+
         const existingUser = await AuthRepository.FindByEmail(email);
         if (existingUser) {
             throw new BadRequestError("Email já cadastrado.");
@@ -12,14 +18,20 @@ class AuthService {
 
         const password_hash = await bcrypt.hash(password, 10);
 
-        await AuthRepository.Register(name, email, password_hash);
+        const result = await AuthRepository.Register(name, formattedEmail, password_hash);
 
         const token = CreateToken(result.id);
         return { token };
     }
 
     async Login(email, password) {
-        const user = await AuthRepository.FindByEmail(email);
+        if (!email || !password) {
+            throw new BadRequestError("Email e senha são obrigatórios.");
+        }
+        
+        const formattedEmail = email.toLowerCase().trim();
+        
+        const user = await AuthRepository.FindByEmail(formattedEmail);
         if (!user || !(await bcrypt.compare(password, user.password_hash))) {
             throw new BadRequestError("Credenciais inválidas.");
         }
