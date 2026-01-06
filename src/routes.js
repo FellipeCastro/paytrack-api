@@ -5,6 +5,7 @@ import AuthController from "./controllers/AuthController.js";
 import UserController from "./controllers/UserController.js";
 import CategoryController from "./controllers/CategoryController.js";
 import SubscriptionController from "./controllers/SubscriptionController.js";
+import ChargeController from "./controllers/ChargeController.js";
 
 const routes = Router();
 
@@ -44,10 +45,31 @@ routes.delete("/categories/:id", ValidateToken, CategoryController.Delete);
 
 // subscriptions
 routes.get("/subscriptions", ValidateToken, SubscriptionController.List);
-routes.get("/subscriptions/:id", ValidateToken, SubscriptionController.ListByID);
+routes.get(
+    "/subscriptions/:id",
+    ValidateToken,
+    SubscriptionController.ListByID
+);
 routes.post("/subscriptions", ValidateToken, SubscriptionController.Create);
 routes.put("/subscriptions/:id", ValidateToken, SubscriptionController.Edit);
-routes.patch("/subscriptions/:id/cancel", ValidateToken, SubscriptionController.Cancel);
+routes.patch(
+    "/subscriptions/:id/cancel",
+    ValidateToken,
+    SubscriptionController.Cancel
+);
 
+// charges
+routes.get("/charges", ValidateToken, ChargeController.List);
+routes.get(
+    "/subscriptions/:id/charges",
+    ValidateToken,
+    ChargeController.ListBySubscriptionID
+);
+routes.post(
+    "/subscriptions/:id/charges",
+    ValidateToken,
+    ChargeController.Create
+);
+routes.patch("/charges/:id/pay", ValidateToken, ChargeController.PayCharge)
 
 export default routes;

@@ -1,4 +1,4 @@
-import { BadRequestError } from "../helpers/ApiErros.js";
+import { BadRequestError, ConflictError, NotFoundError } from "../helpers/ApiErros.js";
 import SubscriptionRepository from "../repositories/SubscriptionRepository.js";
 
 class SubscriptionService {
@@ -14,7 +14,7 @@ class SubscriptionService {
         );
 
         if (existingSubscription) {
-            throw new BadRequestError(
+            throw new ConflictError(
                 "Já existe uma assinatura com esse nome para este usuário."
             );
         }
@@ -108,7 +108,7 @@ class SubscriptionService {
         const subscription = await SubscriptionRepository.ListByID(user_id, id);
 
         if (!subscription) {
-            throw new BadRequestError("Assinatura não encontrada.");
+            throw new NotFoundError("Assinatura não encontrada.");
         }
 
         if (!service_name) {
@@ -153,7 +153,7 @@ class SubscriptionService {
         const subscription = await SubscriptionRepository.ListByID(user_id, id);
 
         if (!subscription) {
-            throw new BadRequestError("Assinatura não encontrada.");
+            throw new NotFoundError("Assinatura não encontrada.");
         }
         await SubscriptionRepository.Cancel(id, user_id);
     }

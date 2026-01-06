@@ -75,6 +75,13 @@ class SubscriptionRepository {
             { where: { id, user_id } }
         );
     }
+
+    async UpdateNextBillingDate(id, user_id, next_billing_date) {
+        await Subscription.update(
+            { next_billing_date },
+            { where: { id, user_id } }
+        );
+    }
 }
 
 export default new SubscriptionRepository();

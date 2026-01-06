@@ -5,8 +5,8 @@ const errorMiddleware = (error, req, res, next) => {
             ? error.message
             : "Erro interno do servidor.";
 
-            console.log(error);
-            
+    // console.log(error);
+
     return res.status(statusCode).json({ error: message });
 };
 
