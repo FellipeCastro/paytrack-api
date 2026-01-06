@@ -4,6 +4,7 @@ import { ValidateToken } from "./middlewaers/auth.js";
 import AuthController from "./controllers/AuthController.js";
 import UserController from "./controllers/UserController.js";
 import CategoryController from "./controllers/CategoryController.js";
+import SubscriptionController from "./controllers/SubscriptionController.js";
 
 const routes = Router();
 
@@ -30,7 +31,7 @@ routes.get("/health", (req, res) => {
 routes.post("/auth/register", AuthController.Register);
 routes.post("/auth/login", AuthController.Login);
 
-// user
+// users
 routes.get("/users/profile", ValidateToken, UserController.Get);
 routes.put("/users/profile", ValidateToken, UserController.Edit);
 routes.delete("/users/profile", ValidateToken, UserController.Delete);
@@ -40,5 +41,13 @@ routes.get("/categories", ValidateToken, CategoryController.List);
 routes.post("/categories", ValidateToken, CategoryController.Create);
 routes.put("/categories/:id", ValidateToken, CategoryController.Edit);
 routes.delete("/categories/:id", ValidateToken, CategoryController.Delete);
+
+// subscriptions
+routes.get("/subscriptions", ValidateToken, SubscriptionController.List);
+routes.get("/subscriptions/:id", ValidateToken, SubscriptionController.ListByID);
+routes.post("/subscriptions", ValidateToken, SubscriptionController.Create);
+routes.put("/subscriptions/:id", ValidateToken, SubscriptionController.Edit);
+routes.patch("/subscriptions/:id/cancel", ValidateToken, SubscriptionController.Cancel);
+
 
 export default routes;
