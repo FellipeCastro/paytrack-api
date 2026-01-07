@@ -6,6 +6,7 @@ import UserController from "./controllers/UserController.js";
 import CategoryController from "./controllers/CategoryController.js";
 import SubscriptionController from "./controllers/SubscriptionController.js";
 import ChargeController from "./controllers/ChargeController.js";
+import DashboardController from "./controllers/DashboardController.js";
 
 const routes = Router();
 
@@ -70,6 +71,10 @@ routes.post(
     ValidateToken,
     ChargeController.Create
 );
-routes.patch("/charges/:id/pay", ValidateToken, ChargeController.PayCharge)
+routes.patch("/charges/:id/pay", ValidateToken, ChargeController.PayCharge);
+
+// dashboard
+routes.get("/dashboard/summary", ValidateToken, DashboardController.GetSummary);
+routes.get("/dashboard/upcoming", ValidateToken, DashboardController.GetUpcoming);
 
 export default routes;
