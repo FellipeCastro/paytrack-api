@@ -12,7 +12,7 @@ const CreateToken = (user_id) => {
     return token;
 };
 
-const ValidateToken = (req, res, next) => {
+const AuthMiddleware = (req, res, next) => {
     const authToken = req.headers.authorization;
 
     if (!authToken) {
@@ -32,4 +32,4 @@ const ValidateToken = (req, res, next) => {
     });
 };
 
-export { CreateToken, ValidateToken };
+export { CreateToken, AuthMiddleware };

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import sequelize from "./config/database.js";
-import { ValidateToken } from "./middlewaers/auth.js";
+import { AuthMiddleware } from "./middlewaers/auth.js";
 import AuthController from "./controllers/AuthController.js";
 import UserController from "./controllers/UserController.js";
 import CategoryController from "./controllers/CategoryController.js";
@@ -35,51 +35,51 @@ routes.post("/auth/register", AuthController.Register);
 routes.post("/auth/login", AuthController.Login);
 
 // users
-routes.get("/users/profile", ValidateToken, UserController.Get);
-routes.put("/users/profile", ValidateToken, UserController.Edit);
-routes.delete("/users/profile", ValidateToken, UserController.Delete);
+routes.get("/users/profile", AuthMiddleware, UserController.Get);
+routes.put("/users/profile", AuthMiddleware, UserController.Edit);
+routes.delete("/users/profile", AuthMiddleware, UserController.Delete);
 
 // categories
-routes.get("/categories", ValidateToken, CategoryController.List);
-routes.post("/categories", ValidateToken, CategoryController.Create);
-routes.put("/categories/:id", ValidateToken, CategoryController.Edit);
-routes.delete("/categories/:id", ValidateToken, CategoryController.Delete);
+routes.get("/categories", AuthMiddleware, CategoryController.List);
+routes.post("/categories", AuthMiddleware, CategoryController.Create);
+routes.put("/categories/:id", AuthMiddleware, CategoryController.Edit);
+routes.delete("/categories/:id", AuthMiddleware, CategoryController.Delete);
 
 // subscriptions
-routes.get("/subscriptions", ValidateToken, SubscriptionController.List);
+routes.get("/subscriptions", AuthMiddleware, SubscriptionController.List);
 routes.get(
     "/subscriptions/:id",
-    ValidateToken,
+    AuthMiddleware,
     SubscriptionController.ListByID
 );
-routes.post("/subscriptions", ValidateToken, SubscriptionController.Create);
-routes.put("/subscriptions/:id", ValidateToken, SubscriptionController.Edit);
+routes.post("/subscriptions", AuthMiddleware, SubscriptionController.Create);
+routes.put("/subscriptions/:id", AuthMiddleware, SubscriptionController.Edit);
 routes.patch(
     "/subscriptions/:id/cancel",
-    ValidateToken,
+    AuthMiddleware,
     SubscriptionController.Cancel
 );
 
 // charges
-routes.get("/charges", ValidateToken, ChargeController.List);
+routes.get("/charges", AuthMiddleware, ChargeController.List);
 routes.get(
     "/subscriptions/:id/charges",
-    ValidateToken,
+    AuthMiddleware,
     ChargeController.ListBySubscriptionID
 );
 routes.post(
     "/subscriptions/:id/charges",
-    ValidateToken,
+    AuthMiddleware,
     ChargeController.Create
 );
-routes.patch("/charges/:id/pay", ValidateToken, ChargeController.PayCharge);
+routes.patch("/charges/:id/pay", AuthMiddleware, ChargeController.PayCharge);
 
 // dashboard
-routes.get("/dashboard/summary", ValidateToken, DashboardController.GetSummary);
-routes.get("/dashboard/upcoming", ValidateToken, DashboardController.GetUpcoming);
+routes.get("/dashboard/summary", AuthMiddleware, DashboardController.GetSummary);
+routes.get("/dashboard/upcoming", AuthMiddleware, DashboardController.GetUpcoming);
 
 // alerts 
-routes.get("/alerts", ValidateToken, AlertController.List);
-routes.patch("/alerts/:id/read", ValidateToken, AlertController.ReadAlert);
+routes.get("/alerts", AuthMiddleware, AlertController.List);
+routes.patch("/alerts/:id/read", AuthMiddleware, AlertController.ReadAlert);
 
 export default routes;

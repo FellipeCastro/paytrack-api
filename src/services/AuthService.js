@@ -33,7 +33,7 @@ class AuthService {
         
         const user = await AuthRepository.FindByEmail(formattedEmail);
         if (!user || !(await bcrypt.compare(password, user.password_hash))) {
-            throw new BadRequestError("Credenciais inválidas.");
+            throw new BadRequestError("Email ou senha inválido.");
         }
 
         const token = CreateToken(user.id);
