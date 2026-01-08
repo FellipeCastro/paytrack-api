@@ -3,6 +3,7 @@ import {
     NotFoundError,
     UnprocessableEntityError,
 } from "../helpers/ApiErros.js";
+import AlertRepository from "../repositories/AlertRepository.js";
 import ChargeRepository from "../repositories/ChargeRepository.js";
 import SubscriptionRepository from "../repositories/SubscriptionRepository.js";
 
@@ -36,6 +37,7 @@ class ChargeService {
 
         const charge_date = new Date();
         const amount = subscription.amount;
+        const serviceName = subscription.service_name;
 
         await ChargeRepository.Create(subscription_id, charge_date, amount);
 
@@ -54,16 +56,20 @@ class ChargeService {
         );
 
         // alerts
+        await AlertRepository.Create(
+            user_id,
+            `Nova cobrança registrada para ${serviceName} no valor de R$ ${amount}`
+        );
     }
 
     async PayCharge(id) {
         const charge = await ChargeRepository.ListByID(id);
         if (!charge) {
             throw new NotFoundError("Essa cobrança não existe.");
-        }        
+        }
 
         if (charge.status === "paid") {
-            throw new BadRequestError("Essa cobrança já foi paga.")
+            throw new BadRequestError("Essa cobrança já foi paga.");
         }
 
         await ChargeRepository.PayCharge(id);

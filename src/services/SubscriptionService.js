@@ -1,4 +1,9 @@
-import { BadRequestError, ConflictError, NotFoundError } from "../helpers/ApiErros.js";
+import {
+    BadRequestError,
+    ConflictError,
+    NotFoundError,
+} from "../helpers/ApiErros.js";
+import AlertRepository from "../repositories/AlertRepository.js";
 import SubscriptionRepository from "../repositories/SubscriptionRepository.js";
 
 class SubscriptionService {
@@ -156,6 +161,13 @@ class SubscriptionService {
             throw new NotFoundError("Assinatura não encontrada.");
         }
         await SubscriptionRepository.Cancel(id, user_id);
+
+        const serviceName = subscription.service_name
+
+        await AlertRepository.Create(
+            user_id,
+            `Sua assinatura do(a) ${serviceName} foi cancelada.`
+        );
     }
 }
 

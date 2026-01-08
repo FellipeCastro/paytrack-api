@@ -73,7 +73,11 @@ class DashboardRepository {
         );
     }
 
-    async GetUpcoming(user_id, initial_period, final_period) {
+    async GetUpcoming(user_id, daysAhead = 7) {
+        const today = new Date();
+        const futureDate = new Date();
+        futureDate.setDate(today.getDate() + daysAhead);
+
         return await Charge.findAll({
             include: [
                 {
@@ -81,19 +85,16 @@ class DashboardRepository {
                     as: "Subscription",
                     where: {
                         status: "active",
-                        user_id
+                        user_id,
+                        next_billing_date: {
+                            [Op.between]: [today, futureDate],
+                        },
                     },
-                    attributes: [],
+                    attributes: ["service_name", "next_billing_date"],
                 },
             ],
             where: {
                 status: "pending",
-                charge_date: {
-                    [Op.between]: [
-                        new Date(initial_period),
-                        new Date(final_period),
-                    ],
-                },
             },
         });
     }

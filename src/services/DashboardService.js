@@ -28,14 +28,7 @@ class DashboardService {
     }
 
     async GetUpcoming(user_id) {
-        const now = new Date();
-
-        const initial_period = now;
-
-        const final_period = new Date();
-        final_period.setDate(final_period.getDate() + 7);
-
-        return await DashboardRepository.GetUpcoming(user_id, initial_period, final_period);
+        return await DashboardRepository.GetUpcoming(user_id);
     }
 }
 
