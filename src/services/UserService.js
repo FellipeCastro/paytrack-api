@@ -12,6 +12,9 @@ class UserService {
 
     async Edit(user_id, name, currency, notifications_enabled) {
         const user = await UserRepository.FindByID(user_id);
+        if (!user) {
+            throw new NotFoundError("Usuário não encontrado.");
+        }
         if (!name) {
             name = user.name;
         }

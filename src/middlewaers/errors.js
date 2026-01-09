@@ -4,7 +4,7 @@ const errorMiddleware = (error, req, res, next) => {
         error.message && error.statusCode
             ? error.message
             : "Erro interno do servidor.";
-    return res.status(statusCode).json({ error: message });
+    return res.status(statusCode).json({ message });
 };
 
 export default errorMiddleware;
