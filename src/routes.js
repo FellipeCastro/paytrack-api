@@ -9,10 +9,10 @@ import ChargeController from "./controllers/ChargeController.js";
 import DashboardController from "./controllers/DashboardController.js";
 import AlertController from "./controllers/AlertController.js";
 
-const routes = Router();
+const router = Router();
 
 // health check route
-routes.get("/health", (req, res) => {
+router.get("/health", (req, res) => {
     sequelize
         .authenticate()
         .then(() => {
@@ -31,55 +31,63 @@ routes.get("/health", (req, res) => {
 });
 
 // auth
-routes.post("/auth/register", AuthController.Register);
-routes.post("/auth/login", AuthController.Login);
+router.post("/auth/register", AuthController.Register);
+router.post("/auth/login", AuthController.Login);
 
 // users
-routes.get("/users/profile", AuthMiddleware, UserController.Get);
-routes.put("/users/profile", AuthMiddleware, UserController.Edit);
-routes.delete("/users/profile", AuthMiddleware, UserController.Delete);
+router.get("/users/profile", AuthMiddleware, UserController.Get);
+router.put("/users/profile", AuthMiddleware, UserController.Edit);
+router.delete("/users/profile", AuthMiddleware, UserController.Delete);
 
 // categories
-routes.get("/categories", AuthMiddleware, CategoryController.List);
-routes.post("/categories", AuthMiddleware, CategoryController.Create);
-routes.put("/categories/:id", AuthMiddleware, CategoryController.Edit);
-routes.delete("/categories/:id", AuthMiddleware, CategoryController.Delete);
+router.get("/categories", AuthMiddleware, CategoryController.List);
+router.post("/categories", AuthMiddleware, CategoryController.Create);
+router.put("/categories/:id", AuthMiddleware, CategoryController.Edit);
+router.delete("/categories/:id", AuthMiddleware, CategoryController.Delete);
 
 // subscriptions
-routes.get("/subscriptions", AuthMiddleware, SubscriptionController.List);
-routes.get(
+router.get("/subscriptions", AuthMiddleware, SubscriptionController.List);
+router.get(
     "/subscriptions/:id",
     AuthMiddleware,
     SubscriptionController.ListByID
 );
-routes.post("/subscriptions", AuthMiddleware, SubscriptionController.Create);
-routes.put("/subscriptions/:id", AuthMiddleware, SubscriptionController.Edit);
-routes.patch(
+router.post("/subscriptions", AuthMiddleware, SubscriptionController.Create);
+router.put("/subscriptions/:id", AuthMiddleware, SubscriptionController.Edit);
+router.patch(
     "/subscriptions/:id/cancel",
     AuthMiddleware,
     SubscriptionController.Cancel
 );
 
 // charges
-routes.get("/charges", AuthMiddleware, ChargeController.List);
-routes.get(
+router.get("/charges", AuthMiddleware, ChargeController.List);
+router.get(
     "/subscriptions/:id/charges",
     AuthMiddleware,
     ChargeController.ListBySubscriptionID
 );
-routes.post(
+router.post(
     "/subscriptions/:id/charges",
     AuthMiddleware,
     ChargeController.Create
 );
-routes.patch("/charges/:id/pay", AuthMiddleware, ChargeController.PayCharge);
+router.patch("/charges/:id/pay", AuthMiddleware, ChargeController.PayCharge);
 
 // dashboard
-routes.get("/dashboard/summary", AuthMiddleware, DashboardController.GetSummary);
-routes.get("/dashboard/upcoming", AuthMiddleware, DashboardController.GetUpcoming);
+router.get(
+    "/dashboard/summary",
+    AuthMiddleware,
+    DashboardController.GetSummary
+);
+router.get(
+    "/dashboard/upcoming",
+    AuthMiddleware,
+    DashboardController.GetUpcoming
+);
 
-// alerts 
-routes.get("/alerts", AuthMiddleware, AlertController.List);
-routes.patch("/alerts/:id/read", AuthMiddleware, AlertController.ReadAlert);
+// alerts
+router.get("/alerts", AuthMiddleware, AlertController.List);
+router.patch("/alerts/:id/read", AuthMiddleware, AlertController.ReadAlert);
 
-export default routes;
+export default router;
