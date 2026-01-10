@@ -83,33 +83,132 @@ Essa estrutura reflete um cenário real de SaaS e foi pensada para facilitar man
 
 ---
 
-## 🏗 Arquitetura
+# 🛠 Tecnologias Utilizadas
 
-O projeto segue uma arquitetura organizada e escalável, baseada em:
+## 📦 Backend & API
 
+### **Runtime & Framework**
+
+-   **Node.js** - Ambiente de execução JavaScript no servidor
+-   **Express.js** - Framework web minimalista e flexível para construção da API
+
+### **Banco de Dados & ORM**
+
+-   **PostgreSQL** - Sistema de banco de dados relacional robusto e confiável
+-   **Sequelize** - ORM para Node.js com suporte a PostgreSQL, MySQL, SQLite e MSSQL
+-   **pg / pg-hstore** - Drivers PostgreSQL para Node.js
+
+### **Autenticação & Segurança**
+
+-   **bcryptjs** - Biblioteca para hash de senhas com bcrypt
+-   **jsonwebtoken** - Implementação de JSON Web Tokens (JWT) para autenticação
+
+### **Documentação & Testes**
+
+-   **swagger-ui-express** - Interface Swagger para documentação interativa da API
+-   **supertest** - Biblioteca para testes de integração de APIs HTTP
+-   **vitest** - Framework de testes rápido e moderno
+
+### **Configuração & Utilidades**
+
+-   **dotenv** - Gerenciamento de variáveis de ambiente
+-   **cors** - Middleware para habilitar CORS (Cross-Origin Resource Sharing)
+
+## 🏗 Arquitetura & Padrões
+
+### **Padrão MVC (Model-View-Controller)**
+
+-   **Models** - Definição de entidades e relacionamentos com Sequelize
+-   **Controllers** - Lógica de tratamento de requisições e respostas
+-   **Services** - Regras de negócio e validações
+-   **Repositories** - Camada de acesso a dados
+
+### **Design Patterns Implementados**
+
+-   **Repository Pattern** - Isolamento da lógica de acesso a dados
+-   **Service Layer** - Separação clara das regras de negócio
+-   **Middleware Pattern** - Processamento modular de requisições
+-   **Error Handling** - Tratamento centralizado de erros
+
+## 🗂 Estrutura de Projeto
+
+```
+paytrack-api/
+├── src/
+│   ├── config/          # Configurações (banco, ambiente)
+│   ├── controllers/     # Controladores das rotas
+│   ├── helpers/         # Utilitários e classes de erro
+│   ├── middlewares/     # Middlewares (autenticação, validação)
+│   ├── models/          # Modelos do Sequelize
+│   ├── repositories/    # Camada de acesso a dados
+│   ├── routes/          # Definição de rotas
+│   ├── services/        # Regras de negócio
+│   └── swagger.js       # Documentação Swagger
+├── tests/
+│   └── e2e/             # Testes end-to-end
+├── .env.example         # Variáveis de ambiente exemplo
+├── package.json         # Dependências e scripts
+└── README.md            # Documentação do projeto
+```
+
+## 🔧 Ferramentas de Desenvolvimento
+
+### **Gerenciamento de Dependências**
+
+-   **npm** - Gerenciador de pacotes do Node.js
+
+### **Testes**
+
+-   **Testes E2E** - Testes completos de ponta a ponta
+-   **Testes de Integração** - Validação de endpoints da API
+-   **Suíte de Testes** - Cobertura de casos de sucesso e erro
+
+### **Documentação**
+
+-   **OpenAPI 3.0** - Especificação para documentação da API
+-   **Swagger UI** - Interface interativa para testar endpoints
+
+## 🚀 Práticas Adotadas
+
+### **Boas Práticas de Código**
+
+-   Código modular e reutilizável
 -   Separação clara de responsabilidades
--   Camada de models para persistência de dados
--   Relacionamentos bem definidos no banco de dados
--   Preparação para expansão com services e controllers
+-   Tratamento adequado de erros
+-   Validações de entrada robustas
+
+### **Segurança**
+
+-   Autenticação via JWT
+-   Hash de senhas com bcrypt
+-   Proteção contra SQL Injection (via Sequelize)
+-   Headers de segurança configurados
+
+### **Qualidade de Código**
+
+-   Testes automatizados
+-   Documentação completa
+-   Padrões de commit semânticos
+-   Estrutura consistente de projeto
+
+## 📈 Escalabilidade & Manutenibilidade
+
+### **Design para Escala**
+
+-   Conexões otimizadas com banco de dados
+-   Queries eficientes através do Sequelize
+-   Cache ready (estrutura preparada para implementação)
+
+### **Facilidade de Manutenção**
+
+-   Configuração por ambiente
+-   Logs estruturados
+-   Migrações de banco de dados
+-   Versionamento de API
 
 ---
 
-## 🚀 Status do Projeto
-
-🔧 **Em desenvolvimento (MVP)**  
-As funcionalidades principais estão sendo implementadas com foco em estabilidade e clareza das regras de negócio.
-
----
-
-## 📌 Próximos Passos
-
--   Finalização da API
--   Implementação de autenticação segura
--   Dashboard com resumo financeiro
--   Filtros por período e categoria
--   Interface web para gerenciamento das assinaturas
-
----
+**Esta stack foi escolhida por oferecer um equilíbrio entre produtividade, performance e manutenibilidade, sendo ideal para projetos que necessitam de robustez e escalabilidade.**
 
 ## 👨‍💻 Autor
 
