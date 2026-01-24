@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
 import Charge from "../models/Charge.js";
+import Subscription from "../models/Subscription.js";
 
 class ChargeRepository {
     async ListByID(id) {
@@ -8,8 +9,10 @@ class ChargeRepository {
         });
     }
 
-    async List(initial_period, final_period, status) {
-        const where = {};
+    async List(user_id, initial_period, final_period, status) {
+        const where = {
+            "$Subscription.user_id$": user_id,
+        };
 
         // Filtro por período (charge_date entre initial_period e final_period)
         if (initial_period && final_period) {
@@ -39,6 +42,13 @@ class ChargeRepository {
 
         return await Charge.findAll({
             where,
+            include: [
+                {
+                    model: Subscription,
+                    attributes: [],
+                    required: true,
+                },
+            ],
             order: [["charge_date", "DESC"]],
         });
     }

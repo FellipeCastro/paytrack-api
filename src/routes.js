@@ -1,6 +1,6 @@
 import { Router } from "express";
 import sequelize from "./config/database.js";
-import { AuthMiddleware } from "./middlewaers/auth.js";
+import { AuthMiddleware } from "./middlewares/auth.js";
 import AuthController from "./controllers/AuthController.js";
 import UserController from "./controllers/UserController.js";
 import CategoryController from "./controllers/CategoryController.js";
@@ -50,14 +50,14 @@ router.get("/subscriptions", AuthMiddleware, SubscriptionController.List);
 router.get(
     "/subscriptions/:id",
     AuthMiddleware,
-    SubscriptionController.ListByID
+    SubscriptionController.ListByID,
 );
 router.post("/subscriptions", AuthMiddleware, SubscriptionController.Create);
 router.put("/subscriptions/:id", AuthMiddleware, SubscriptionController.Edit);
 router.patch(
     "/subscriptions/:id/cancel",
     AuthMiddleware,
-    SubscriptionController.Cancel
+    SubscriptionController.Cancel,
 );
 
 // charges
@@ -65,12 +65,12 @@ router.get("/charges", AuthMiddleware, ChargeController.List);
 router.get(
     "/subscriptions/:id/charges",
     AuthMiddleware,
-    ChargeController.ListBySubscriptionID
+    ChargeController.ListBySubscriptionID,
 );
 router.post(
     "/subscriptions/:id/charges",
     AuthMiddleware,
-    ChargeController.Create
+    ChargeController.Create,
 );
 router.patch("/charges/:id/pay", AuthMiddleware, ChargeController.PayCharge);
 
@@ -78,12 +78,12 @@ router.patch("/charges/:id/pay", AuthMiddleware, ChargeController.PayCharge);
 router.get(
     "/dashboard/summary",
     AuthMiddleware,
-    DashboardController.GetSummary
+    DashboardController.GetSummary,
 );
 router.get(
     "/dashboard/upcoming",
     AuthMiddleware,
-    DashboardController.GetUpcoming
+    DashboardController.GetUpcoming,
 );
 
 // alerts

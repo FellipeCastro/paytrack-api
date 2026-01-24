@@ -2,11 +2,13 @@ import ChargeService from "../services/ChargeService.js";
 
 class ChargeController {
     async List(req, res) {
+        const user_id = req.user_id;
         const { initial_period, final_period, status } = req.query;
         const charges = await ChargeService.List(
+            user_id,
             initial_period,
             final_period,
-            status
+            status,
         );
         return res.status(200).json(charges);
     }

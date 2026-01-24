@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
-import swaggerUi from "swagger-ui-express"
+import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger.js";
 import router from "./routes.js";
-import errorMiddleware from "./middlewaers/errors.js";
+import errorMiddleware from "./middlewares/errors.js";
 
 const app = express();
 

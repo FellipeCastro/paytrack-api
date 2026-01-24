@@ -8,11 +8,12 @@ import ChargeRepository from "../repositories/ChargeRepository.js";
 import SubscriptionRepository from "../repositories/SubscriptionRepository.js";
 
 class ChargeService {
-    async List(initial_period, final_period, status) {
+    async List(user_id, initial_period, final_period, status) {
         return await ChargeRepository.List(
+            user_id,
             initial_period,
             final_period,
-            status
+            status,
         );
     }
 
@@ -23,7 +24,7 @@ class ChargeService {
     async Create(user_id, subscription_id) {
         const subscription = await SubscriptionRepository.ListByID(
             user_id,
-            subscription_id
+            subscription_id,
         );
         if (!subscription) {
             throw new NotFoundError("Essa assinatura não existe.");
@@ -31,7 +32,7 @@ class ChargeService {
 
         if (subscription.status === "canceled") {
             throw new UnprocessableEntityError(
-                "Essa assinatura foi cancelada."
+                "Essa assinatura foi cancelada.",
             );
         }
 
@@ -52,13 +53,13 @@ class ChargeService {
         await SubscriptionRepository.UpdateNextBillingDate(
             subscription_id,
             user_id,
-            next_billing_date
+            next_billing_date,
         );
 
         // alerts
         await AlertRepository.Create(
             user_id,
-            `Nova cobrança registrada para ${serviceName} no valor de R$ ${amount}`
+            `Nova cobrança registrada para ${serviceName} no valor de R$ ${amount}`,
         );
     }
 

@@ -11,22 +11,22 @@ class SubscriptionService {
         service_name,
         amount,
         next_billing_date,
-        user_id
+        user_id,
     ) {
         const existingSubscription = await SubscriptionRepository.FindByName(
             service_name,
-            user_id
+            user_id,
         );
 
         if (existingSubscription) {
             throw new ConflictError(
-                "Já existe uma assinatura com esse nome para este usuário."
+                "Já existe uma assinatura com esse nome para este usuário.",
             );
         }
 
         if (amount < 0) {
             throw new BadRequestError(
-                "O valor da assinatura deve ser maior que zero."
+                "O valor da assinatura deve ser maior que zero.",
             );
         }
 
@@ -35,13 +35,13 @@ class SubscriptionService {
             isNaN(Date.parse(next_billing_date))
         ) {
             throw new BadRequestError(
-                "A data do próximo pagamento é inválida."
+                "A data do próximo pagamento é inválida.",
             );
         }
 
         if (new Date(next_billing_date) <= new Date()) {
             throw new BadRequestError(
-                "A data do próximo pagamento deve ser uma data futura."
+                "A data do próximo pagamento deve ser uma data futura.",
             );
         }
     }
@@ -72,7 +72,7 @@ class SubscriptionService {
         service_name,
         amount,
         billing_cycle,
-        next_billing_date
+        next_billing_date,
     ) {
         if (
             !category_id ||
@@ -88,7 +88,7 @@ class SubscriptionService {
             service_name,
             amount,
             next_billing_date,
-            user_id
+            user_id,
         );
 
         await SubscriptionRepository.Create(
@@ -97,7 +97,7 @@ class SubscriptionService {
             service_name,
             amount,
             billing_cycle,
-            next_billing_date
+            next_billing_date,
         );
     }
 
@@ -108,7 +108,7 @@ class SubscriptionService {
         next_billing_date,
         category_id,
         id,
-        user_id
+        user_id,
     ) {
         const subscription = await SubscriptionRepository.ListByID(user_id, id);
 
@@ -140,7 +140,7 @@ class SubscriptionService {
             service_name,
             amount,
             next_billing_date,
-            user_id
+            user_id,
         );
 
         await SubscriptionRepository.Edit(
@@ -150,7 +150,7 @@ class SubscriptionService {
             next_billing_date,
             category_id,
             id,
-            user_id
+            user_id,
         );
     }
 
@@ -162,11 +162,11 @@ class SubscriptionService {
         }
         await SubscriptionRepository.Cancel(id, user_id);
 
-        const serviceName = subscription.service_name
+        const serviceName = subscription.service_name;
 
         await AlertRepository.Create(
             user_id,
-            `Sua assinatura do(a) ${serviceName} foi cancelada.`
+            `Sua assinatura do(a) ${serviceName} foi cancelada.`,
         );
     }
 }
